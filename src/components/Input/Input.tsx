@@ -6,7 +6,7 @@ import cn from 'classnames';
 const Input = forwardRef<HTMLInputElement, InputProps>(function Input({ className, isValid = true, ...props }, ref) {
 
 	return (
-		<input type='email'{...props} ref={ref} className={cn(className, styles['input'], {
+		<input type='text'{...props} ref={ref} className={cn(className, styles['input'], {
 			[styles['invalid']]: !isValid
 		})}></input>
 	);

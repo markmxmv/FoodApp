@@ -8,13 +8,19 @@ import { Layout } from './layout/Layout/Layout.tsx';
 import { Product } from './pages/Product/Product.tsx';
 import { PREFIX } from './helpers/API.ts';
 import axios from 'axios';
+import { AuthLayout } from './layout/Auth/AuthLayout.tsx';
+import Login from './pages/Login/Login.tsx';
+import Register from './pages/Register/Register.tsx';
+import { RequireAuth } from './helpers/RequireAuth.tsx';
+
+
 
 const Menu = lazy(() => import('./pages/Menu/Menu.tsx'));
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <Layout/>,
+		element: <RequireAuth><Layout/></RequireAuth>,
 		children: [
 			{
 				path: '/',
@@ -34,14 +40,22 @@ const router = createBrowserRouter([
 
 
 					});
-					// await new Promise<void>((resolve) => {
-					// 	setTimeout(() => {
-					// 		resolve();
-					// 	}, 2000);
-					// });
-					// const { data } = await axios.get(`${PREFIX}/profducts/${params.id}`);
-					// return data;
 				}
+			}
+		]
+	},
+
+	{
+		path: '/auth',
+		element: <AuthLayout/>,
+		children: [
+			{
+				path: 'login',
+				element: <Login/>
+			},
+			{
+				path: 'register',
+				element: <Register/>
 			}
 		]
 	},
