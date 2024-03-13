@@ -45,11 +45,9 @@ function Menu() {
 				<Search placeholder='Search dishes'/>
 
 			</div>
-			<div>
-				{error && <>{error}</>}
-				{!isLoading && <MenuList products={products}/>}
-				{isLoading && <>Loading products...</>}
-			</div>
+			{error && <>{error}</>}
+			{!isLoading && <MenuList products={products}/>}
+			{isLoading && <>Loading products...</>}
 		</>
 	);
 }

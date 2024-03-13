@@ -7,6 +7,9 @@ import { FormEvent, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { PREFIX } from '../../helpers/API';
 import { LoginResponse } from '../../interfaces/auth.interface';
+import { AppDispatch } from '../../store/store';
+import { userActions } from '../../store/user.slice';
+import { useDispatch } from 'react-redux';
 
 export type LoginForm = {
     email: {
@@ -20,6 +23,7 @@ export type LoginForm = {
 function Login() {
 	const [error, setError] = useState<string | null>();
 	const navigate = useNavigate();
+	const dispatch = useDispatch<AppDispatch>();
 
 	const submit = async (e:FormEvent) => {
 		e.preventDefault();
@@ -37,8 +41,7 @@ function Login() {
 				email,
 				password
 			});
-			console.log(data);
-			localStorage.setItem('jwt', data.access_tocken);
+			dispatch(userActions.addJwt(data.access_token));
 			navigate('/');
 		} catch (e) {
 			if (e instanceof AxiosError) {
@@ -55,11 +58,11 @@ function Login() {
 			<form className={styles['form']} onSubmit={submit}>
 				<div className={styles['field']}>
 					<label htmlFor="email">Email</label>
-					<Input id="email" name="email" placeholder='Email'></Input>
+					<Input type='email' autoComplete='off' id="email" name="email" placeholder='Email'></Input>
 				</div>
 				<div className={styles['field']}>
 					<label htmlFor="password">Password</label>
-					<Input id="password" name="password" placeholder='Password'></Input>
+					<Input type='password' autoComplete='off' id="password" name="password" placeholder='Password'></Input>
 				</div>
 				<Button appearence="big">Login</Button>
 			</form>
