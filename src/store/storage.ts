@@ -1,7 +1,7 @@
 export function loadState<T>(key: string): T | undefined {
 	try {
 		const jsonState = localStorage.getItem(key);
-		if(!jsonState) {
+		if (!jsonState) {
 			return undefined;
 		}
 		return JSON.parse(jsonState);
